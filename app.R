@@ -3,16 +3,18 @@ library (DT)
 library(tidyverse)
 library(readr)
 library(httr)
+library(dplyr)
 
 getData <- function(x) {
     #Get most recent data file from repo
     req <- GET("https://api.github.com/repos/jzpero/covid19lit/git/trees/master?recursive=1")
     stop_for_status(req)
     filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
-    link <- grep("data/current", filelist, value = TRUE, fixed = TRUE)
+    link <- sprintf("https://raw.githubusercontent.com/jzpero/covid19lit/master/%s",grep("data/current", filelist, value = TRUE, fixed = TRUE))
 
+    
     #Data Processing (done once)
-    rawtable <- read_csv(sprintf("https://raw.githubusercontent.com/jzpero/covid19lit/master/"),link)
+    rawtable <- read_csv(link)
     headers <- colnames(rawtable)
     included.headers <- c("Title", "Author", "Journal","Date",  "PMID", "Type of Study")
     filtered.table <<- rawtable[!duplicated(rawtable$PMID),included.headers]
@@ -54,7 +56,7 @@ ui <- navbarPage(
                  width=3
              ),
              mainPanel(
-                 "Last updated: April 6, 2020. Contains 246 references screened from 1890 results.",
+                 "Last updated: April 6, 2020.",
                  DT::dataTableOutput('ex1'),
                  width=9
              )
