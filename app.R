@@ -2,16 +2,33 @@ library(shiny)
 library (DT)
 library(tidyverse)
 library(readr)
+library(httr)
 
-#Data Processing (done once)
-rawtable <- read_csv("https://raw.githubusercontent.com/jzpero/covid19lit/master/data/2020-04-05-21-21-18.csv")
-headers <- colnames(rawtable)
-included.headers <- c("Title", "Author", "Journal","Date",  "PMID", "Type of Study")
-filtered.table <<- rawtable[!duplicated(rawtable$PMID),included.headers]
-unique.authors <<- lapply(strsplit(paste(filtered.table$Author, collapse=','), ","), trimws)[[1]]
-unique.authors <<- sort(unique(unique.authors[lapply(unique.authors, nchar) > 0]))
-unique.journals <<- sort(unique(filtered.table$Journal))
-unique.studytypes <<- sort(unique(filtered.table$`Type of Study`))
+getData <- function(x) {
+    #Get most recent data file from repo
+    req <- GET("https://api.github.com/repos/jzpero/covid19lit/git/trees/master?recursive=1")
+    stop_for_status(req)
+    filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
+    link <- grep("data/current", filelist, value = TRUE, fixed = TRUE)
+
+    #Data Processing (done once)
+    rawtable <- read_csv(sprintf("https://raw.githubusercontent.com/jzpero/covid19lit/master/"),link)
+    headers <- colnames(rawtable)
+    included.headers <- c("Title", "Author", "Journal","Date",  "PMID", "Type of Study")
+    filtered.table <<- rawtable[!duplicated(rawtable$PMID),included.headers]
+    unique.authors <<- lapply(strsplit(paste(filtered.table$Author, collapse=','), ","), trimws)[[1]]
+    unique.authors <<- sort(unique(unique.authors[lapply(unique.authors, nchar) > 0]))
+    unique.journals <<- sort(unique(filtered.table$Journal))
+    unique.studytypes <<- sort(unique(filtered.table$`Type of Study`))
+    
+    # spec.table <- rawtable[,headers[grepl("Spec", headers)]]
+    # spec.col <- sapply(1:nrow(spec.table), function(x) {
+    #     a <- as.character(spec.table[x,])
+    #     a <- a[!is.na(a)]
+    # })
+}
+
+getData()
 
 createLink <- function(PMID, text) {
     sprintf('<a href="https://www.ncbi.nlm.nih.gov/pubmed/%s">%s</a>', PMID, text)
@@ -33,11 +50,13 @@ ui <- navbarPage(
                  selectInput(inputId = "author", "Author(s)",choices = NULL, multiple = TRUE),
                  actionButton(inputId = "clearAll", "Clear All"),
                  downloadButton(outputId = "export", label = "Download all"),
-                 downloadButton(outputId = "exportselected", label = "Download selected")
+                 downloadButton(outputId = "exportselected", label = "Download selected"),
+                 width=3
              ),
              mainPanel(
                  "Last updated: April 6, 2020. Contains 246 references screened from 1890 results.",
-                 DT::dataTableOutput('ex1')
+                 DT::dataTableOutput('ex1'),
+                 width=9
              )
          )
     ),
@@ -58,6 +77,9 @@ ui <- navbarPage(
 )
 
 server <- function(input, output, session) {
+    #Update the data once
+    getData()
+    
     #Populate the search filters
     updateSelectInput(session, "journal", choices = c("Select a journal" = "", unique.journals))
     updateSelectInput(session, "author", choices = c("Select authors" = "", unique.authors))
@@ -71,7 +93,6 @@ server <- function(input, output, session) {
         reset("journal")
         reset("study")
         reset("author")
-        cat("Clearing...\n")
     })
 
     #Main Data Output
