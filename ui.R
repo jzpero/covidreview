@@ -10,10 +10,11 @@ ui <- navbarPage(
          position = "right",
          sidebarPanel(
            id = "searchpanel",
-           selectInput(inputId = "journal", "Journal", choices = NULL, multiple = TRUE),
+           selectInput(inputId = "journal", label="Journal", choices = NULL, multiple = TRUE),
            selectInput(inputId = "study", "Type of Study", choices = NULL, multiple = TRUE),
            selectInput(inputId = "author", "Author(s)",choices = NULL, multiple = TRUE),
            selectInput(inputId = "specialty", "Specialty Bucket",choices = NULL, multiple = TRUE),
+           switchInput(inputId="specSwitch", size="mini", label="Match", onLabel = "Any", offLabel = "All", value=TRUE, offStatus = "success", inline = TRUE),
            # sliderInput(inputId = "daterange", "Date Range", min=min(date_range), max=max(date_range), value=c(min(date_range), max(date_range)), round=T, ticks=T),
            # plotOutput(outputId="graph", height = "200px"),
            hr(),
@@ -34,7 +35,9 @@ ui <- navbarPage(
            h2("What is this?"),
            p("Recent literature on COVID-19 is highly variable in scope, quality, and applicability to the front-line physician. In a time where information and time are valuable resources, there must be a resource that provides curated primary and secondary literature so that clinical decisions can be made with more confidence. This project provides a way to browse current and relevant literature on COVID-19 that has been curated via a systematic review approach."),
            h2("Contributors"),
-           HTML("Citations and data were reviewed and curated by <b>Becky Jones</b>, <b>Daniel Levin</b>, <b>Hannah Kearney</b>, <b>Jasper Ho</b>, and <b>Meghan Glibbery</b>, all medical students at McMaster University.<br>This tool was coded and designed by <b>Jasper Ho</b> <a href='https://www.twitter.com/jzpero'>@jzpero</a> in R using Shiny.<br> The project was conceptualized and is supervised by <b>Dr. Mark Crowther</b>.")
+           HTML("Citations and data were reviewed and curated by <b>Becky Jones</b>, <b>Daniel Levin</b>, <b>Hannah Kearney</b>, <b>Jasper Ho</b>, and <b>Meghan Glibbery</b>, all medical students at McMaster University.<br>This tool was coded and designed by <b>Jasper Ho</b> <a href='https://www.twitter.com/jzpero'>@jzpero</a> in R using Shiny.<br> The project was conceptualized and is supervised by <b>Dr. Mark Crowther</b>."),
+           h2("Terms of Use"),
+           HTML("The medical information on this site is provided as an information resource created for physician and health care provider use only, and is not to be used or relied on for any diagnostic or treatment purposes. This information should not be used as a substitute for professional diagnosis and treatment, and your use of this site is outside of any physician-patient relationship. <br>Please consult your health care provider before making any health care decisions or for guidance about a specific medical condition. We expressly disclaim responsibility, and shall have no liability, for any damages, loss, injury, or liability whatsoever suffered as a result of your reliance on the information contained in this site.")
         )
   ),
     tabPanel('Methods',
