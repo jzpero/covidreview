@@ -1,12 +1,13 @@
 server <- function(input, output, session) {
   #Update the data once
-  link <- "data/current_2020-04-06-19-34-50.csv"
+  link <- "data/current_2020-04-07-23-12-07.csv"
   
   #Data Processing (done once)
   rawtable <- read.csv(link, sep = ",", na.strings="", encoding = "UTF-8", check.names=FALSE, stringsAsFactors=FALSE)
   headers <- colnames(rawtable)
   filtered.table <<- rawtable[!duplicated(rawtable$PMID),]
   N <<- nrow(filtered.table)
+  # filtered.table$Abstract[is.na(filtered.table$Abstract)] <- "No abstract."
   
   #Create dropdown choices
   unique.authors <- lapply(strsplit(paste(filtered.table$Author, collapse=','), ","), trimws)[[1]]
@@ -44,13 +45,8 @@ server <- function(input, output, session) {
     shinyjs::reset("searchpanel")
   })
 
-  # output$graph <- renderPlot({
-  #   plot(date_range, date_counts)
-  # })
-  
   #Main Data Output
-  output$ex1 <- DT::renderDataTable({
-
+  output$ex1 <- DT::renderDataTable(server=FALSE, {
     #Filter Journal
     if (!is.null(input$journal)) {
       display.table <- display.table[display.table$Journal %in% input$journal,]
@@ -98,8 +94,21 @@ server <- function(input, output, session) {
     
     #Output
     included.headers <- c("Title", "Author", "Journal","Date",  "PMID", "Type of Study", "Areas")
-    DT::datatable(display.table[,included.headers], options = list(pageLength = 25), rownames= FALSE, escape=FALSE)
+    DT::datatable(
+      display.table[,included.headers],
+      options = list(pageLength = 25),
+      rownames= FALSE, escape=FALSE, selection = 'single')
   })
+  
+  #Caption rendering
+  output$ref_caption <- renderUI(
+    if (!is.null(input$ex1_rows_selected)) {
+      HTML(paste0(
+        trimws(display.table[input$ex1_rows_selected,"Author"]), ". ",
+        "<b>",display.table[input$ex1_rows_selected,"Title"], "</b> ",
+        "<i>", trimws(display.table[input$ex1_rows_selected,"Journal"]), "</i>. <br><br>", if (is.na(display.table[input$ex1_rows_selected, "Abstract"])) "No abstract." else display.table[input$ex1_rows_selected, "Abstract"]
+      ))} else HTML("<i>Select a reference...</i>")
+  )
   
   #Export option
   output$export <- downloadHandler(
@@ -107,16 +116,7 @@ server <- function(input, output, session) {
       paste("references",Sys.Date(),".csv", sep = "")
     },
     content = function(file) {
-      write.csv(display.table, file, row.names = FALSE)
-    }
-  )
-  
-  output$exportselected <- downloadHandler(
-    filename = function() {
-      paste("references",Sys.Date(),".csv", sep = "")
-    },
-    content = function(file) {
-      write.csv(display.table[input$ex1_rows_selected,], file, row.names = FALSE)
+      write.csv(display.table[,included.headers], file, row.names = FALSE)
     }
   )
 }

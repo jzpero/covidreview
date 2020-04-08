@@ -3,8 +3,10 @@ library (DT)
 library(tidyverse)
 library(httr)
 library(shinyWidgets)
+library(shinythemes)
+library(easyPubMed)
 
-#Get most recent data file from repo
+#Get most recent data file from repoa
 # req <- GET("https://api.github.com/repos/jzpero/covid19lit/git/trees/master?recursive=1")
 # stop_for_status(req)
 # filelist <- unlist(lapply(content(req)$tree, "[", "path"), use.names = F)
