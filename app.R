@@ -2,9 +2,10 @@ library(shiny)
 library (DT)
 library(tidyverse)
 library(httr)
+library(dplyr)
 library(shinyWidgets)
 library(shinythemes)
-library(easyPubMed)
+library(anytime)
 
 #Get most recent data file from repoa
 # req <- GET("https://api.github.com/repos/jzpero/covid19lit/git/trees/master?recursive=1")
@@ -14,6 +15,7 @@ library(easyPubMed)
 
 source("ui.R")
 source("server.R")
+
 
 # Run the application 
 shinyApp(ui = ui, server = server)

@@ -1,31 +1,51 @@
 server <- function(input, output, session) {
   #Update the data once
-  link <- "data/current_2020-04-07-23-12-07.csv"
+  link <- "data/current_2020-04-10-02-01-26.csv"
+  
+  #Case formatting from https://stat.ethz.ch/R-manual/R-devel/library/base/html/chartr.html
+  capwords <- function(s, strict = FALSE) {
+    cap <- function(s) paste(toupper(substring(s, 1, 1)),
+                             {s <- substring(s, 2); if(strict) tolower(s) else s},
+                             sep = "", collapse = " " )
+    sapply(strsplit(s, split = " "), cap, USE.NAMES = !is.null(names(s)))
+  }
   
   #Data Processing (done once)
   rawtable <- read.csv(link, sep = ",", na.strings="", encoding = "UTF-8", check.names=FALSE, stringsAsFactors=FALSE)
+  date_data <- read.csv("data/date_output.csv", header=T, colClasses = c("character", "character"))
   headers <- colnames(rawtable)
   filtered.table <<- rawtable[!duplicated(rawtable$PMID),]
+  filtered.table$Journal <- capwords(filtered.table$Journal)
   N <<- nrow(filtered.table)
-  # filtered.table$Abstract[is.na(filtered.table$Abstract)] <- "No abstract."
-  
+
+  # Date Mapping to PubMed Data
+  for (i in 1:N) {
+    if (filtered.table$PMID[i] %in% date_data$pmid) {
+      replacement <- (date_data %>% filter(pmid == filtered.table$PMID[i]))$date
+      if (!is.na(replacement)) filtered.table$Date[i] <- replacement
+    }
+  }
+  filtered.table$Date <- anytime::anydate(filtered.table$Date)
+
   #Create dropdown choices
   unique.authors <- lapply(strsplit(paste(filtered.table$Author, collapse=','), ","), trimws)[[1]]
   unique.authors <<- sort(unique(unique.authors[lapply(unique.authors, nchar) > 0]))
   unique.journals <- sort(unique(filtered.table$Journal))
   unique.studytypes <<- sort(unique(filtered.table$'Type of Study'))
-  unique.specialties <<- sort(c("Internal Medicine", "General", "Dermatology", "ICU", "Emergency Medicine", "Anesthesia", "Radiology", "Peds", "OBGYN", "Public Health", "Cardiology", "Oncology", "Psych"))
+  unique.specialties <<- sort(c("Internal Medicine", "General", "Dermatology", "ICU", "Emergency Medicine", "Anesthesia", "Radiology", "OBGYN", "Public Health", "Cardiology", "Oncology", "Psych", "Family Medicine", "Gastroenterology", "Geriatrics", "Hematology", "Infectious Disease", "Immunology", "Medical Education", "Microbiology", "Nephrology", "Neurology", "Ophthalmology", "Palliative Care", "Pathology", "Pediatrics","Respirology", "Rheumatology", "Surgery", "Urology"))
   
   spec.out <- vector("list", length=N)
   spec.cols <- grep("Spec", headers)
+  # View(colnames(filtered.table)[spec.cols])
   for (i in 1:N) {
     k <- unlist(filtered.table[i,spec.cols], use.names = F)
     k <- sort(k[!is.na(k)])
-    k <- k[!grepl("Other", k)]
+    # k <- k[!grepl("Other", k)]
     spec.out[[i]] <- k
   }
-  filtered.table$"Areas" <<- spec.out
-  
+  filtered.table$Areas <- spec.out
+  # View(filtered.table)
+
   #Create a PubMed link in HTML
   createLink <- function(PMID, text) {
     sprintf('<a href="https://www.ncbi.nlm.nih.gov/pubmed/%s" target="_blank">%s</a>', PMID, text)
@@ -89,6 +109,16 @@ server <- function(input, output, session) {
       display.table <- display.table[v,]
     }
     
+    #Caption rendering
+    output$ref_caption <- renderUI(
+      if (!is.null(input$ex1_rows_selected)) {
+        HTML(paste0(
+          trimws(display.table[input$ex1_rows_selected,"Author"]), ". ",
+          "<b>",display.table[input$ex1_rows_selected,"Title"], "</b> ",
+          "<i>", trimws(display.table[input$ex1_rows_selected,"Journal"]), "</i>. <br><br>", if (is.na(display.table[input$ex1_rows_selected, "Abstract"])) "No abstract." else display.table[input$ex1_rows_selected, "Abstract"]
+        ))} else HTML("<i>Select a reference...</i>")
+    )
+    
     #Create Links
     display.table$Title <- createLink(display.table$PMID, display.table$Title)
     
@@ -96,27 +126,17 @@ server <- function(input, output, session) {
     included.headers <- c("Title", "Author", "Journal","Date",  "PMID", "Type of Study", "Areas")
     DT::datatable(
       display.table[,included.headers],
-      options = list(pageLength = 25),
+      options = list(pageLength = 25, order = list(list(3, "desc"), list(4, "desc"))),
       rownames= FALSE, escape=FALSE, selection = 'single')
+    
+    # #Export option
+    # output$export <- downloadHandler(
+    #   filename = function() {
+    #     paste("references",Sys.Date(),".csv", sep = "")
+    #   },
+    #   content = function(file) {
+    #     write.csv(display.table[,included.headers], file, row.names = FALSE)
+    #   }
+    # )
   })
-  
-  #Caption rendering
-  output$ref_caption <- renderUI(
-    if (!is.null(input$ex1_rows_selected)) {
-      HTML(paste0(
-        trimws(display.table[input$ex1_rows_selected,"Author"]), ". ",
-        "<b>",display.table[input$ex1_rows_selected,"Title"], "</b> ",
-        "<i>", trimws(display.table[input$ex1_rows_selected,"Journal"]), "</i>. <br><br>", if (is.na(display.table[input$ex1_rows_selected, "Abstract"])) "No abstract." else display.table[input$ex1_rows_selected, "Abstract"]
-      ))} else HTML("<i>Select a reference...</i>")
-  )
-  
-  #Export option
-  output$export <- downloadHandler(
-    filename = function() {
-      paste("references",Sys.Date(),".csv", sep = "")
-    },
-    content = function(file) {
-      write.csv(display.table[,included.headers], file, row.names = FALSE)
-    }
-  )
 }
