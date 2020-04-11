@@ -20,7 +20,7 @@ ui <- navbarPage(
                 selectInput(inputId = "specialty", "Specialty Bucket",choices = NULL, multiple = TRUE),
                 shinyWidgets::switchInput(inputId="specSwitch", size="mini", label="Match", onLabel = "Any", offLabel = "All", value=TRUE, offStatus = "success"),
                 hr(),
-                actionButton(inputId = "clearAll", "Clear all", class="btn-primary btn-sm"),
+                actionButton(inputId = "clearAll", "Clear all", class="btn-primary btn-sm")
                 # downloadButton(outputId = "export", label = "Download all", class="btn-secondary btn-sm")
                 # downloadButton(outputId = "exportselected", label = "Download selected", class="btn-secondary btn-sm")
               ),
