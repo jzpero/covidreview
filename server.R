@@ -1,6 +1,8 @@
+library(dplyr)
+
 server <- function(input, output, session) {
   #Update the data once
-  link <- "data/current_2020-04-10-02-01-26.csv"
+  link <- "data/current_2020-04-11-18-31-17.csv"
   
   #Case formatting from https://stat.ethz.ch/R-manual/R-devel/library/base/html/chartr.html
   capwords <- function(s, strict = FALSE) {

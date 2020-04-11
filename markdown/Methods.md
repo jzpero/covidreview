@@ -38,7 +38,6 @@ Few strict exclusion criteria were applied. As above, our assessment of referenc
 
  - Poorly referenced or highly subjective with limited contributions to clinical practice
  - Case reports/studies with no unique findings
- - Case studies with N < 5
  - News articles
  - Explanation of journal responses to COVID-19
  - Relevant only to overseas/international settings

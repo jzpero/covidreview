@@ -1,5 +1,5 @@
 ui <- navbarPage(
-  title = 'COVID-19 Literature',
+  title = 'COVID-19 Literature Review',
   position = c("fixed-top"),
   tabPanel(
       'All',
@@ -55,5 +55,5 @@ ui <- navbarPage(
   ),
   collapsible = TRUE,
   includeCSS("www/yeti.css"),
-  tags$head(includeHTML(("google-analytics.html")))
+  tags$head(includeHTML(("google-analytics.html")), tags$link(rel="shortcut icon", href="favicon.ico"))
 )
