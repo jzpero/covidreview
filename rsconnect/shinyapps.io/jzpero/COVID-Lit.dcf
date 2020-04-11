@@ -5,8 +5,9 @@ account: jzpero
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2062662
-bundleId: 2972974
+bundleId: 3000763
 url: https://jzpero.shinyapps.io/COVID-Lit/
-when: 1586126531.35709
+when: 1586631646.96099
 asMultiple: FALSE
 asStatic: FALSE
+ignoredFiles: .RData|.Renviron|GoDaddy Receipt.pdf|pubmedhook.R|markdown/About-Proj.html|markdown/Methods.html

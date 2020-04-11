@@ -2,7 +2,7 @@ library(dplyr)
 
 server <- function(input, output, session) {
   #Update the data once
-  link <- "data/current_2020-04-11-18-31-17.csv"
+  link <- list.files("data/", pattern="(current)")[1]
   
   #Case formatting from https://stat.ethz.ch/R-manual/R-devel/library/base/html/chartr.html
   capwords <- function(s, strict = FALSE) {
@@ -42,11 +42,9 @@ server <- function(input, output, session) {
   for (i in 1:N) {
     k <- unlist(filtered.table[i,spec.cols], use.names = F)
     k <- sort(k[!is.na(k)])
-    # k <- k[!grepl("Other", k)]
     spec.out[[i]] <- k
   }
   filtered.table$Areas <- spec.out
-  # View(filtered.table)
 
   #Create a PubMed link in HTML
   createLink <- function(PMID, text) {

@@ -1,7 +1,6 @@
 library(shiny)
 library (DT)
 library(tidyverse)
-library(httr)
 library(shinyWidgets)
 library(shinythemes)
 library(anytime)

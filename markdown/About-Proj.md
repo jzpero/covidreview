@@ -2,11 +2,11 @@
 Recent literature on COVID-19 is highly variable in scope, quality, and applicability to the front-line physician. In a time where information and time are valuable resources, there must be a resource that provides curated primary and secondary literature so that clinical decisions can be made with more confidence. This project provides a way to browse current and relevant literature on COVID-19 that has been curated via a systematic review approach.
 
 ## Contributors
-Citations and data were reviewed and curated by **Becky Jones**, **Daniel Levin**, **Hannah Kearney**, **Jasper Ho**, and **Meghan Glibbery**, all medical students at McMaster University.<br>This tool was coded and designed by **Jasper Ho** (<a href="https://www.twitter.com/jzpero">@jzpero</a>) in R using Shiny.  
+Citations and data were reviewed and curated by **Becky Jones**, **Daniel Levin**, **Hannah Kearney**, **Jasper Ho**, **Jillian Howden**, **John Kim**, **Maya Amar**, **Meghan Glibbery**, and **Sara Markovic**, all medical students at McMaster University.<br>This tool was coded and designed by **Jasper Ho** (<a href="https://www.twitter.com/jzpero">@jzpero</a>) in R using Shiny.  
 The project was conceptualized and is supervised by **Dr. Mark Crowther** MD, MSc, FRCPC.
 
 ## Contact Us
-Find us via e-mail at [covidpubreview@gmail.ca](mailto:covidpubreview@gmail.ca).
+Find us via e-mail at [covidpubreview@gmail.com](mailto:covidpubreview@gmail.com).
 
 ## Terms of Use
 The medical information on this site is provided as an information resource created for physician and health care provider use only, and is not to be used or relied on for any diagnostic or treatment purposes. This information should not be used as a substitute for professional diagnosis and treatment, and your use of this site is outside of any physician-patient relationship.  
