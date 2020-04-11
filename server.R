@@ -2,7 +2,7 @@ library(dplyr)
 
 server <- function(input, output, session) {
   #Update the data once
-  link <- list.files("data/", pattern="(current)")[1]
+  link <- list.files("data/", pattern="(current)", full.names=TRUE)[1]
   
   #Case formatting from https://stat.ethz.ch/R-manual/R-devel/library/base/html/chartr.html
   capwords <- function(s, strict = FALSE) {
