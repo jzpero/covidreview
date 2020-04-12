@@ -15,7 +15,7 @@ filterPanel <- wellPanel(
   div(style = "margin-top:-15px"),
   p(textOutput("N", inline = TRUE), " result(s)."),
   fluidRow(
-    column(6,dropdown(
+    column(6,shinyWidgets::dropdown(
       downloadButton(outputId = "export", label = "CSV", class="btn-secondary btn-sm"),
       # downloadButton(outputId = "report", label = "PDF", class="btn-secondary btn-sm"),
       status="btn-primary btn-sm",
