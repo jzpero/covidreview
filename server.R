@@ -45,6 +45,7 @@ server <- function(input, output, session) {
     spec.out[[i]] <- k
   }
   filtered.table$Areas <- spec.out
+  filtered.table$Specialties <- sapply(filtered.table$Areas, function(x) paste(unlist(x), collapse=", "))
 
   #Create a PubMed link in HTML
   createLink <- function(PMID, text) {
@@ -64,6 +65,15 @@ server <- function(input, output, session) {
   observeEvent(input$clearAll, {
     shinyjs::reset("searchpanel")
   })
+  
+  #pie chart
+  # output$pie <- renderCachedPlot(pie(sort(table(display.table$`Type of Study`))), cacheKeyExpr="session")
+  # date_data <- data.frame(table(filtered.table$Date))
+  # lo <- loess(date_data$Freq~as.numeric(date_data$Var1))
+  # output$bar <- renderCachedPlot({
+  #   plot(table(filtered.table$Date), type = "h", lwd = 5, ylab = "Count")
+  #   lines(predict(lo), col='red', lwd=2)
+  # }, cacheKeyExpr = "barsession")
 
   #Main Data Output
   output$ex1 <- DT::renderDataTable(server=FALSE, {
@@ -123,10 +133,11 @@ server <- function(input, output, session) {
     display.table$Title <- createLink(display.table$PMID, display.table$Title)
     
     #Output
-    included.headers <- c("Title", "Author", "Journal","Date",  "PMID", "Type of Study", "Areas")
+    included.headers <- c("Title", "Author", "Journal","Date",  "PMID", "Type of Study", "Specialties")
     DT::datatable(
       display.table[,included.headers],
-      options = list(pageLength = 25, order = list(list(3, "desc"), list(4, "desc"))),
+      extensions = "Responsive",
+      options = list(pageLength = 10, order = list(list(3, "desc"), list(4, "desc"))),
       rownames= FALSE, escape=FALSE, selection = 'single')
     
     # #Export option

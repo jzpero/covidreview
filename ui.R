@@ -6,11 +6,8 @@ ui <- navbarPage(
       id="tab-panel",
       shinyjs::useShinyjs(),
       fluidRow(
-        column(8,
-          DT::dataTableOutput('ex1')
-        ),
-        column(4,
-            verticalLayout(
+        column(3,
+            fluidRow(
               wellPanel(
                 id = "searchpanel",
                 p(strong("Filter Options")),
@@ -23,11 +20,16 @@ ui <- navbarPage(
                 actionButton(inputId = "clearAll", "Clear all", class="btn-primary btn-sm")
                 # downloadButton(outputId = "export", label = "Download all", class="btn-secondary btn-sm")
                 # downloadButton(outputId = "exportselected", label = "Download selected", class="btn-secondary btn-sm")
-              ),
+              )
+            ),
+            fluidRow(
               wellPanel(
                 htmlOutput("ref_caption")
               )
             )
+        ),
+        column(9,
+               DT::dataTableOutput('ex1')
         )
       )
   ),
@@ -50,8 +52,18 @@ ui <- navbarPage(
            fluidRow(column(3),
                     column(6,wellPanel(HTML(includeMarkdown("markdown/Methods.md")))),
                     column(3))
-    ),
-    tabPanel('Statistics')
+    )#,
+    # tabPanel('Statistics',
+    #          tags$style(type="text/css","body {padding-top: 70px;}"),
+    #          fluidRow(column(3),
+    #                   column(6,
+    #                          wellPanel(
+    #                          p("Breakdown of Included Study Type"),
+    #                          plotOutput("pie"),
+    #                          p("References by Publication Date"),
+    #                          plotOutput("bar"))),
+    #                   column(3))
+    # )
   ),
   collapsible = TRUE,
   includeCSS("www/yeti.css"),
