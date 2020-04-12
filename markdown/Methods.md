@@ -7,8 +7,8 @@ We searched for relevant articles on PubMed with the following search strategy:
 
 Our search is ongoing as new literature emerges. Our repository of unfiltered articles has been updated on the following dates:
 
-- March 28, 2020
-- April 8, 2020
+- March 28, 2020 (N=1890)
+- April 8, 2020 (N=3288)
 
 ## Inclusion Criteria
 No strict inclusion criteria were established; the purpose of this literature review is to provide high-yield pertinent research to the front-line clinician across a breadth of areas, specifically oriented towards the Ontario/Canada/North American context of COVID-19.
@@ -42,15 +42,15 @@ Few strict exclusion criteria were applied. As above, our assessment of referenc
  - Explanation of journal responses to COVID-19
  - Relevant only to overseas/international settings
 
-## Screening Methods
-References were independently screened via title/abstract review by two or more reviewers each.
-Disagreements were resolved by group consensus or a third reviewer when necessary.
-
-## Categorization
-Reference type, specialties of interest, and relevance to front-line clinicians were assessed and assigned.
+## Screening and Tagging Methods
+We review new references in a temporally sequential order, oldest to newest.
+References are independently screened via title/abstract review by two or more reviewers each.
+Disagreements are resolved by group consensus or a third reviewer when necessary.
+Reference type, specialties of interest, and relevance to front-line clinicians are assessed and assigned.
+We update this website with newly included references on a regular basis.
 
 ## Webtool Implementation
-This tool has been written in Shiny in R. Source code and data are available at https://github.com/jzpero/covid19lit. Interested in contributing? Contact: jasper.ho (at) medportal.ca.
+This fully open-source tool has been written in Shiny in R. Source code, data, and acknowledgements are available at https://github.com/jzpero/covid19lit. The backend is an Amazon EC2 instance running Shiny Server. Interested in contributing? Contact: jasper.ho (at) medportal.ca.
 
 ## Notes
 This tool is a work in progress. It was also developed by a non-professional. It relies on online data from PubMed parsed from official tools, with custom code or public libraries. As such, there may be occasional errors. Please do not rely on any specific data found on this online tool without appropriate confirmation from the source. Errors may include:

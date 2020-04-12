@@ -1,8 +1,13 @@
 ## What is this?
-Recent literature on COVID-19 is highly variable in scope, quality, and applicability to the front-line physician. In a time where information and time are valuable resources, there must be a resource that provides curated primary and secondary literature so that clinical decisions can be made with more confidence. This project provides a way to browse current and relevant literature on COVID-19 that has been curated via a systematic review approach.
+Recent literature on COVID-19 is highly variable in scope, quality, and applicability to the front-line physician. In a time where information and time are valuable resources, there must be a resource that provides curated primary and secondary literature so that clinical decisions can be made with more confidence.
+
+This project aims to provide a way to explore higher-quality current literature on COVID-19 that has been curated via a systematic review approach.
 
 ## Contributors
-Citations and data were reviewed and curated by **Becky Jones**, **Daniel Levin**, **Hannah Kearney**, **Jasper Ho**, **Jillian Howden**, **John Kim**, **Maya Amar**, **Meghan Glibbery**, and **Sara Markovic**, all medical students at McMaster University.<br>This tool was coded and designed by **Jasper Ho** (<a href="https://www.twitter.com/jzpero">@jzpero</a>) in R using Shiny.  
+Citations are reviewed by **Becky Jones**, **Daniel Levin**, **Hannah Kearney**, **Jasper Ho**, **Jillian Howden**, **John Kim**, **Maya Amar**, **Meghan Glibbery**, and **Sara Markovic**, all medical students at McMaster University.
+
+This tool is created, maintained, and updated by **Jasper Ho** ([Twitter](https://www.twitter.com/jzpero), [GitHub](https://www.github.com/jzpero)).
+
 The project was conceptualized and is supervised by **Dr. Mark Crowther** MD, MSc, FRCPC.
 
 ## Contact Us
