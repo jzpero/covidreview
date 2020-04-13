@@ -4,15 +4,19 @@ Recent literature on COVID-19 is highly variable in scope, quality, and applicab
 This project aims to provide a way to explore higher-quality current literature on COVID-19 that has been curated via a systematic review approach.
 
 ## Contributors
-Citations are reviewed by **Becky Jones**, **Daniel Levin**, **Hannah Kearney**, **Jasper Ho**, **Jillian Howden**, **John Kim**, **Maya Amar**, **Meghan Glibbery**, and **Sara Markovic**, all medical students at McMaster University.
+Citations are reviewed by **Becky Jones**, **Daniel Levin**, **Hannah Kearney**, **Jasper Ho**, **Jillian Howden**, **John Kim**, **Maya Amar**, **Meghan Glibbery**, and **Sara Markovic**, all senior medical students at McMaster University, Hamilton, Ontario, Canada.
 
 This tool is created, maintained, and updated by **Jasper Ho** ([Twitter](https://www.twitter.com/jzpero), [GitHub](https://www.github.com/jzpero)).
 
-The project was conceptualized and is supervised by **Dr. Mark Crowther** MD, MSc, FRCPC.
+The project was conceptualized and is supervised by **Dr. Mark Crowther** MD, MSc, FRCPC, McMaster University.
 
 ## Contact Us
 Find us via e-mail at [covidpubreview@gmail.com](mailto:covidpubreview@gmail.com).
 
 ## Terms of Use
-The medical information on this site is provided as an information resource created for physician and health care provider use only, and is not to be used or relied on for any diagnostic or treatment purposes. This information should not be used as a substitute for professional diagnosis and treatment, and your use of this site is outside of any physician-patient relationship.  
-Please consult your health care provider before making any health care decisions or for guidance about a specific medical condition. We expressly disclaim responsibility, and shall have no liability, for any damages, loss, injury, or liability whatsoever suffered as a result of your reliance on the information contained in this site.
+This site is created as an information resource for physician and health care provider use. The accuracy of content contained herein is not guaranteed; the use of this summary tool does not substitute for clinical experience and expertise. We expressly disclaim responsibility, and shall have no liability, for any damages, loss, injury, or liability whatsoever suffered as a result of your reliance on the information directly contained in this site.
+
+If you are not a physician or other health care provider, this tool is not to be used as a substitute for professional diagnosis and treatment. If you have health concerns, particularly related to COVID-19, please seek professional health care.
+
+
+<p align="center">🍁</p>
