@@ -1,5 +1,5 @@
 ## Search Methods
-We searched for relevant articles on PubMed with the following search strategy:
+Our current PubMed search strategy is:
 
 ```
 ((((("COVID-19" [Supplementary Concept]) OR "severe acute respiratory syndrome coronavirus 2" [Supplementary Concept]) OR COVID-19[Title/Abstract]) OR coronavirus 19[Title/Abstract]) OR SARS-COV-2[Title/Abstract] OR wuhan coronavirus AND 2019/12:2030[pdat]) OR 2019-nCoV OR 2019nCoV OR COVID-19 OR SARS-CoV-2)
@@ -15,6 +15,7 @@ Our search is ongoing as new literature emerges. Our internal repository of unfi
 As we continually review and process the literature in sequential order, oldest to newest, we will continue to add included publications. Past updates are:
 
 - April 12, 2020 (N=537)
+- April 13, 2020 (N=659)
 
 ## Inclusion Criteria
 No strict inclusion criteria were established; the purpose of this literature review is to provide high-yield pertinent research to the front-line clinician across a breadth of areas, specifically oriented towards the Ontario/Canada/North American context of COVID-19.
