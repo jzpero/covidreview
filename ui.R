@@ -78,6 +78,6 @@ ui <- navbarPage(
     # )
   ),
   collapsible = TRUE,
-  includeCSS("www/yeti.css"),
-  tags$head(includeHTML(("google-analytics.html")), tags$link(rel="shortcut icon", href="favicon.ico"))
+  theme = "yeti.css",
+  header = tags$head(includeHTML(("google-analytics.html")), tags$link(rel="shortcut icon", href="favicon.ico"))
 )
