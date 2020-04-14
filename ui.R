@@ -1,7 +1,7 @@
 filterPanel <- wellPanel(
   id = "searchpanel",
   p(strong("Filter Options"), br(), "Any combination of filters accepted."),
-  selectInput(inputId = "journal", label="Journal", choices = NULL, multiple = TRUE, ),
+  selectInput(inputId = "journal", label="Journal", choices = NULL, multiple = TRUE),
   div(style = "margin-top:-15px"),
   selectInput(inputId = "study", "Type of Study", choices = NULL, multiple = TRUE),
   div(style = "margin-top:-15px"),
@@ -45,7 +45,7 @@ ui <- navbarPage(
               column(6,wellPanel(
                 HTML(includeMarkdown("markdown/About-Proj.md")),
                 img(src="team.png",width="100%"),
-                HTML(includeMarkdown("markdown/About-Proj2.md")),
+                HTML(includeMarkdown("markdown/About-Proj2.md"))
               )),
              column(3))
     ),
