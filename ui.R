@@ -45,7 +45,7 @@ ui <- navbarPage(
               column(6,wellPanel(
                 HTML(includeMarkdown("markdown/About-Proj.md")),
                 img(src="team.png",width="100%"),
-                HTML(includeMarkdown("markdown/About-Proj2.md")),
+                HTML(includeMarkdown("markdown/About-Proj2.md"))
               )),
              column(3))
     ),
