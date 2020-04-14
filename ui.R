@@ -38,46 +38,24 @@ ui <- navbarPage(
         column(9, DT::dataTableOutput('ex1'))
       )
   ),
-  # tabPanel("Unreviewed",
-  #          fluidRow(
-  #            column(3,
-  #                   fluidRow(
-  #                     filterPanel
-  #                   ),
-  #                   fluidRow(
-  #                     wellPanel(
-  #                       htmlOutput("ref_caption")
-  #                     )
-  #                   )
-  #            ),
-  #            column(9)
-  #          )
-  # ),
   navbarMenu("About",
     tabPanel("The Project",
            tags$style(type="text/css","body {padding-top:60px;}"),
            fluidRow(column(3),
-             column(6,wellPanel(HTML(includeMarkdown("markdown/About-Proj.md")))),
+              column(6,wellPanel(
+                HTML(includeMarkdown("markdown/About-Proj.md")),
+                img(src="team.png",width="100%"),
+                HTML(includeMarkdown("markdown/About-Proj2.md")),
+              )),
              column(3))
     ),
     tabPanel('Methods',
            fluidRow(column(3),
                     column(6,wellPanel(HTML(includeMarkdown("markdown/Methods.md")))),
                     column(3))
-    )#,
-    # tabPanel('Statistics',
-    #          tags$style(type="text/css","body {padding-top: 70px;}"),
-    #          fluidRow(column(3),
-    #                   column(6,
-    #                          wellPanel(
-    #                          p("Breakdown of Included Study Type"),
-    #                          plotOutput("pie"),
-    #                          p("References by Publication Date"),
-    #                          plotOutput("bar"))),
-    #                   column(3))
-    # )
+    )
   ),
   collapsible = TRUE,
-  includeCSS("www/yeti.css"),
-  tags$head(includeHTML(("google-analytics.html")), tags$link(rel="shortcut icon", href="favicon.ico"))
+  theme = "yeti.css",
+  header = tags$head(includeHTML(("google-analytics.html")), tags$link(rel="shortcut icon", href="favicon.ico"))
 )

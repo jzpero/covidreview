@@ -5,10 +5,16 @@ We searched for relevant articles on PubMed with the following search strategy:
 ((((("COVID-19" [Supplementary Concept]) OR "severe acute respiratory syndrome coronavirus 2" [Supplementary Concept]) OR COVID-19[Title/Abstract]) OR coronavirus 19[Title/Abstract]) OR SARS-COV-2[Title/Abstract] OR wuhan coronavirus AND 2019/12:2030[pdat]) OR 2019-nCoV OR 2019nCoV OR COVID-19 OR SARS-CoV-2)
 ```
 
-Our search is ongoing as new literature emerges. Our repository of unfiltered articles has been updated on the following dates:
+## Updating
+
+Our search is ongoing as new literature emerges. Our internal repository of unfiltered articles has been updated on the following dates:
 
 - March 28, 2020 (N=1890)
 - April 8, 2020 (N=3288)
+
+As we continually review and process the literature in sequential order, oldest to newest, we will continue to add included publications. Past updates are:
+
+- April 12, 2020 (N=537)
 
 ## Inclusion Criteria
 No strict inclusion criteria were established; the purpose of this literature review is to provide high-yield pertinent research to the front-line clinician across a breadth of areas, specifically oriented towards the Ontario/Canada/North American context of COVID-19.
@@ -43,14 +49,13 @@ Few strict exclusion criteria were applied. As above, our assessment of referenc
  - Relevant only to overseas/international settings
 
 ## Screening and Tagging Methods
-We review new references in a temporally sequential order, oldest to newest.
 References are independently screened via title/abstract review by two or more reviewers each.
 Disagreements are resolved by group consensus or a third reviewer when necessary.
 Reference type, specialties of interest, and relevance to front-line clinicians are assessed and assigned.
 We update this website with newly included references on a regular basis.
 
 ## Webtool Implementation
-This fully open-source tool has been written in Shiny in R. Source code, data, and acknowledgements are available at https://github.com/jzpero/covid19lit. The backend is an Amazon EC2 instance running Shiny Server. Interested in contributing? Contact: jasper.ho (at) medportal.ca.
+This fully open-source tool has been written in Shiny in R. Source code, data, and acknowledgements are available at https://github.com/jzpero/covid19lit. Interested in contributing? Contact: jasper.ho (at) medportal.ca.
 
 ## Notes
 This tool is a work in progress. It was also developed by a non-professional. It relies on online data from PubMed parsed from official tools, with custom code or public libraries. As such, there may be occasional errors. Please do not rely on any specific data found on this online tool without appropriate confirmation from the source. Errors may include:
