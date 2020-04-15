@@ -1,3 +1,4 @@
+# Executes once per service start
 library(dplyr)
 
 #Case formatting from https://stat.ethz.ch/R-manual/R-devel/library/base/html/chartr.html
@@ -15,73 +16,73 @@ createLink <- function(PMID, text) {
 
 included.headers <- c("Title - Linked", "Author", "Journal","Date",  "PMID", "Type of Study", "Specialty")
 
-server <- function(input, output, session) { # Executes once per session (no need to restart service)
-  # Update the data once
-  link <- list.files("data/", pattern="(current)", full.names=TRUE)[1]
-  
-  # Data Processing (done once)
-  rawtable <- read.csv(link, sep = ",", na.strings="", encoding = "UTF-8", check.names=FALSE, stringsAsFactors=FALSE, colClasses = "character")
-  rawtable <- rawtable[,-54]
-  date_data <- read.csv("data/date_output.csv", header=T, colClasses = c("character", "character"))
-  headers <- colnames(rawtable)
+# Update the data once
+link <- list.files("data/", pattern="(current)", full.names=TRUE)[1]
 
-  # Deduplicate entries, merging the specialties
-  filtered.table <- data.frame(AuthorList=c(), Journal=c(), 'Type of Study'=c(),  Title=c(), Date=c(), PMID=c(), specialty_raw=c(), Abstract=c(),stringsAsFactors = FALSE, check.names = FALSE)
+# Data Processing (done once)
+rawtable <- read.csv(link, sep = ",", na.strings="", encoding = "UTF-8", check.names=FALSE, stringsAsFactors=FALSE, colClasses = "character")
+rawtable <- rawtable[,-54]
+date_data <- read.csv("data/date_output.csv", header=T, colClasses = c("character", "character"))
+headers <- colnames(rawtable)
+
+# Deduplicate entries, merging the specialties
+filtered.table <- data.frame(AuthorList=c(), Journal=c(), 'Type of Study'=c(),  Title=c(), Date=c(), PMID=c(), specialty_raw=c(), Abstract=c(),stringsAsFactors = FALSE, check.names = FALSE)
+
+unique_refs <- unique(rawtable$Refid)
+for (i in 1:length(unique_refs)) {
+  group <- (rawtable %>% filter(Refid == unique_refs[i])) # separate out the reviews of the same reference
+  group_spec <- group %>% select(starts_with("Spec"))
+  vec <- c()
   
-  unique_refs <- unique(rawtable$Refid)
-  for (i in 1:length(unique_refs)) {
-    group <- (rawtable %>% filter(Refid == unique_refs[i])) # separate out the reviews of the same reference
-    group_spec <- group %>% select(starts_with("Spec"))
-    vec <- c()
-    
-    for (j in 1:nrow(group)) { #iterate through the reviews of the reference and create a list of specialty values
-      vec <- c(vec, group_spec[j,])
-    }
-    
-    specialties <- unique(as.vector(unlist(vec))) # get unique entries as vector
-    specialties <- specialties[!is.na(specialties)]
-    
-    authors <- lapply(strsplit(as.character(group$Author[1]), ","),trimws)
-    
-    d <- group$Date[1]
-    if (group$PMID[1] %in% date_data$pmid) {
-      replacement <- (date_data %>% filter(pmid == group$PMID[1]))$date
-      if (!is.na(replacement)) d <- replacement
-    }
-    
-    # Fill filtered.table with useful data
-    temp <- data.frame(AuthorList=I(authors), Journal=capwords(group$Journal[1]), 'Type of Study'=group$`Type of Study`[1], Title=group$Title[1], Date=d, PMID=group$PMID[1], specialty_raw=I(list(specialties)), Abstract=group$Abstract[1],stringsAsFactors = FALSE,check.names = FALSE)
-    filtered.table <- rbind(filtered.table, temp)
+  for (j in 1:nrow(group)) { #iterate through the reviews of the reference and create a list of specialty values
+    vec <- c(vec, group_spec[j,])
   }
   
-  N <<- nrow(filtered.table)
+  specialties <- unique(as.vector(unlist(vec))) # get unique entries as vector
+  specialties <- specialties[!is.na(specialties)]
   
-  #Create filter choices
-  unique.authors <- sort(unique(unlist(filtered.table$AuthorList)))
-  unique.authors <<- unique.authors[lapply(unique.authors, nchar) > 0]
-  unique.journals <- sort(unique(filtered.table$Journal))
-  unique.studytypes <<- sort(unique(filtered.table$'Type of Study'))
-  unique.specialties <<- sort(c("Internal Medicine", "General", "Dermatology", "ICU", "Emergency Medicine", "Anesthesia", "Radiology", "OBGYN", "Public Health", "Cardiology", "Oncology", "Psych", "Family Medicine", "Gastroenterology", "Geriatrics", "Hematology", "Infectious Disease", "Immunology", "Medical Education", "Microbiology", "Nephrology", "Neurology", "Ophthalmology", "Palliative Care", "Pathology", "Pediatrics","Respirology", "Rheumatology", "Surgery", "Urology"))
+  authors <- lapply(strsplit(as.character(group$Author[1]), ","),trimws)
   
+  d <- group$Date[1]
+  if (group$PMID[1] %in% date_data$pmid) {
+    replacement <- (date_data %>% filter(pmid == group$PMID[1]))$date
+    if (!is.na(replacement)) d <- replacement
+  }
+  
+  # Fill filtered.table with useful data
+  temp <- data.frame(AuthorList=I(authors), Journal=capwords(group$Journal[1]), 'Type of Study'=group$`Type of Study`[1], Title=group$Title[1], Date=d, PMID=group$PMID[1], specialty_raw=I(list(specialties)), Abstract=group$Abstract[1],stringsAsFactors = FALSE,check.names = FALSE)
+  filtered.table <- rbind(filtered.table, temp)
+}
+
+N <<- nrow(filtered.table)
+
+#Create filter choices
+unique.authors <- sort(unique(unlist(filtered.table$AuthorList)))
+unique.authors <<- unique.authors[lapply(unique.authors, nchar) > 0]
+unique.journals <- sort(unique(filtered.table$Journal))
+unique.studytypes <<- sort(unique(filtered.table$'Type of Study'))
+unique.specialties <<- sort(c("Internal Medicine", "General", "Dermatology", "ICU", "Emergency Medicine", "Anesthesia", "Radiology", "OBGYN", "Public Health", "Cardiology", "Oncology", "Psych", "Family Medicine", "Gastroenterology", "Geriatrics", "Hematology", "Infectious Disease", "Immunology", "Medical Education", "Microbiology", "Nephrology", "Neurology", "Ophthalmology", "Palliative Care", "Pathology", "Pediatrics","Respirology", "Rheumatology", "Surgery", "Urology"))
+
+# Aesthestics for Shiny
+filtered.table$Specialty <- lapply(filtered.table$specialty_raw, function(x) paste(x, collapse = ", "))
+filtered.table$Author <- lapply(filtered.table$AuthorList, function(x) paste(x, collapse = ", "))
+
+#############################################
+
+server <- function(input, output, session) { # Executes once per session (no need to restart service)
   #Populate the search filters
   updateSelectInput(session, "journal", choices = c("Select a journal" = "", unique.journals))
   updateSelectInput(session, "author", choices = c("Select authors" = "", unique.authors))
   updateSelectInput(session, "study", choices = c("Select a publication type" = "", unique.studytypes))
   updateSelectInput(session, "specialty", choices = c("Select an area of interest" = "", unique.specialties))
   
-  # Aesthestics for Shiny
-  filtered.table$Specialty <- lapply(filtered.table$specialty_raw, function(x) paste(x, collapse = ", "))
-  filtered.table$Author <- lapply(filtered.table$AuthorList, function(x) paste(x, collapse = ", "))
-  filtered.table$Date
-  
-  #Initiate display table
+  # Get a local copy of the dataset
   display.table <- filtered.table
   
   #clear all button actions
   observeEvent(input$clearAll, {
     shinyjs::reset("searchpanel")
   })
-  
 
   #Main Data Output
   output$ex1 <- DT::renderDataTable(server=FALSE, {
@@ -108,7 +109,7 @@ server <- function(input, output, session) { # Executes once per session (no nee
       display.table <- display.table[v,]
     }
 
-    #Filter Specialty (any)
+    # Filter Specialty (any)
     if (!is.null(input$specialty) & nrow(display.table)) {
       #Initialize FALSE Vector
       v <- vector("logical",nrow(display.table))
