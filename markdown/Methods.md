@@ -11,12 +11,14 @@ Our search is ongoing as new literature emerges. Our internal repository of unfi
 
 - March 28, 2020 (N=1890)
 - April 8, 2020 (N=3288)
+- April 15, 2020 (N=4298)
 
 As we continually review and process the literature in sequential order, oldest to newest, we will continue to add included publications. Past updates are:
 
 - April 12, 2020 (N=537)
 - April 13, 2020 (N=659)
 - April 14, 2020 (N=827)
+- April 15, 2020 (N=966, 32.58% inclusion rate)
 
 ## Inclusion Criteria
 No strict inclusion criteria were established; the purpose of this literature review is to provide high-yield pertinent research to the front-line clinician across a breadth of areas, specifically oriented towards the Ontario/Canada/North American context of COVID-19.
@@ -51,9 +53,10 @@ Few strict exclusion criteria were applied. As above, our assessment of referenc
  - Relevant only to overseas/international settings
 
 ## Screening and Tagging Methods
-References are independently screened via title/abstract review by two or more reviewers each.
-Disagreements are resolved by group consensus or a third reviewer when necessary.
-Reference type, specialties of interest, and relevance to front-line clinicians are assessed and assigned.
+References are independently screened via title/abstract review by two or more reviewers each. The full text is referenced if needed to make a proper decision.
+Inclusion conflicts are resolved by group consensus or a third reviewer when necessary.
+Reference type, specialties of interest, and other meta-data are recorded and merged.
+Dates are not necessarily date of publication; they are obtained with a separate process and refer to the PubMed index date.
 We update this website with newly included references on a regular basis.
 
 ## Webtool Implementation
