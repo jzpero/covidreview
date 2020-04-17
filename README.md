@@ -11,16 +11,9 @@ This database is being constantly updated with references that have been screene
 - links to PubMed page
 
 ## Team
-We are a group of senior medical students at the various campuses of McMaster University, Ontario, Canada. Contributors who screened, tagged, processed references according to title/abstract with or without full-text review:
-- Becky Jones
-- Daniel Levin
-- Hannah Kearney
-- Jasper Ho
-- Jillian Howden
-- John Kim
-- Maya Amar
-- Meghan Glibbery
-- Sara Markovic
+We are a group of senior medical students at the various campuses of McMaster University, Ontario, Canada.
+
+![image](https://user-images.githubusercontent.com/5045614/79619317-858c1f00-80da-11ea-830f-85aafa547495.png)
 
 Website and Shiny app by Jasper Ho.
 Supervised by Dr Mark Crowther, Chair and Professor, Department of Medicine, McMaster University.
