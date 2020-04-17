@@ -21,7 +21,7 @@ link <- list.files("data/", pattern="(current)", full.names=TRUE)[1]
 
 # Data Processing (done once)
 rawtable <- read.csv(link, sep = ",", na.strings="", encoding = "UTF-8", check.names=FALSE, stringsAsFactors=FALSE, colClasses = "character")
-rawtable <- rawtable[,-54]
+rawtable <- rawtable %>% select(-"")
 date_data <- read.csv("data/date_output.csv", header=T, colClasses = c("character", "character"))
 headers <- colnames(rawtable)
 
@@ -157,7 +157,7 @@ server <- function(input, output, session) { # Executes once per session (no nee
     DT::datatable(
       display.table[,included.headers],
       extensions = "Responsive",
-      options = list(pageLength = 10, order = list(list(3, "desc"), list(4, "desc"))),
+      options = list(pageLength = 10, order = list(list(4, "desc"))),
       rownames= FALSE, escape=FALSE, selection = 'single')
   })
 }
