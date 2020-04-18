@@ -19,12 +19,11 @@ filterPanel <- wellPanel(
   fluidRow(
     column(6,shinyWidgets::dropdown(
       downloadButton(outputId = "export", label = "CSV", class="btn-secondary btn-sm"),
-      # downloadButton(outputId = "report", label = "PDF", class="btn-secondary btn-sm"),
       status="btn-primary btn-sm",
       size="sm",
-      label="Download results"
+      label="Download"
     )),
-    column(6, actionButton(inputId = "clearAll", "Clear filters", class="btn-primary btn-sm"))
+    column(6, actionButton(inputId = "clearAll", "Clear", class="btn-primary btn-sm"))
   )
 )
 
