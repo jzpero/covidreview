@@ -36,7 +36,10 @@ ui <- navbarPage(
       id="tab-panel",
       shinyjs::useShinyjs(),
       fluidRow(
-        column(3, filterPanel, wellPanel(htmlOutput("ref_caption"))),
+        column(3, 
+               filterPanel,
+               wellPanel(style = "overflow-y:auto; max-height:350px", htmlOutput("ref_caption"))
+        ),
         column(9, DT::dataTableOutput('ex1'))
       )
   ),
