@@ -93,7 +93,7 @@ server <- function(input, output, session) { # Executes once per session (no nee
   })
 
   #Main Data Output
-  output$ex1 <- DT::renderDataTable(server=FALSE, {
+  output$ex1 <- DT::renderDataTable(server=TRUE, {
     #Filter Journal
     if (!is.null(input$journal)) {
       display.table <- display.table[display.table$Journal %in% input$journal,]
