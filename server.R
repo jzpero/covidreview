@@ -11,10 +11,10 @@ capwords <- function(s, strict = FALSE) {
 
 #Create a PubMed link in HTML
 createLink <- function(PMID, text) {
-  sprintf('<a href="https://www.ncbi.nlm.nih.gov/pubmed/%s" target="_blank">%s</a>', PMID, text)
+  sprintf('<a href="https://www.ncbi.nlm.nih.gov/pubmed/%s" target="_blank"><b>%s</b></a>', PMID, text)
 }
 
-included.headers <- c("Title - Linked", "Author", "Journal","Date",  "PMID", "Type of Study", "Specialty")
+included.headers <- c("Title - Linked", "Author", "Journal","Date",  "PMID", "Type of Study", "buckets_raw", "Specialty")
 
 # Update the data once
 link <- list.files("data/", pattern="(current)", full.names=TRUE)[1]
@@ -25,21 +25,27 @@ rawtable <- rawtable %>% select(-"")
 date_data <- read.csv("data/date_output.csv", header=T, colClasses = c("character", "character"))
 headers <- colnames(rawtable)
 
-# Deduplicate entries, merging the specialties
-filtered.table <- data.frame(AuthorList=c(), Journal=c(), 'Type of Study'=c(),  Title=c(), Date=c(), PMID=c(), specialty_raw=c(), Abstract=c(),stringsAsFactors = FALSE, check.names = FALSE)
+# Deduplicate entries, merging the specialties and type bucket
+filtered.table <- data.frame(AuthorList=c(), Author=c(), Journal=c(), 'Type of Study'=c(),  Title=c(), Date=c(), PMID=c(), specialty_raw=c(), buckets_raw=c(), Abstract=c(),stringsAsFactors = FALSE, check.names = FALSE)
 
 unique_refs <- unique(rawtable$Refid)
 for (i in 1:length(unique_refs)) {
   group <- (rawtable %>% filter(Refid == unique_refs[i])) # separate out the reviews of the same reference
   group_spec <- group %>% select(starts_with("Spec"))
-  vec <- c()
+  vec_spec <- c()
+  group_buck <- group %>% select(starts_with("Type Bucket"))
+  vec_buck <- c()
   
-  for (j in 1:nrow(group)) { #iterate through the reviews of the reference and create a list of specialty values
-    vec <- c(vec, group_spec[j,])
+  
+  for (j in 1:nrow(group)) { #iterate through the reviews of the reference and create a list of (specialty) values and (type bucket) values
+    vec_spec <- c(vec_spec, group_spec[j,])
+    vec_buck <- c(vec_buck, group_buck[j,])
   }
   
-  specialties <- unique(as.vector(unlist(vec))) # get unique entries as vector
+  specialties <- unique(as.vector(unlist(vec_spec))) # get unique entries as vector
   specialties <- specialties[!is.na(specialties)]
+  buckets <- unique(as.vector(unlist(vec_buck))) # get unique entries as vector
+  buckets <- buckets[!is.na(buckets)]
   
   authors <- lapply(strsplit(as.character(group$Author[1]), ","),trimws)
   
@@ -50,7 +56,7 @@ for (i in 1:length(unique_refs)) {
   }
   
   # Fill filtered.table with useful data
-  temp <- data.frame(AuthorList=I(authors), Journal=capwords(group$Journal[1]), 'Type of Study'=group$`Type of Study`[1], Title=group$Title[1], Date=d, PMID=group$PMID[1], specialty_raw=I(list(specialties)), Abstract=group$Abstract[1],stringsAsFactors = FALSE,check.names = FALSE)
+  temp <- data.frame(AuthorList=I(authors), Author=group$Author[1], Journal=capwords(group$Journal[1]), 'Type of Study'=group$`Type of Study`[1], Title=group$Title[1], Date=d, PMID=group$PMID[1], specialty_raw=I(list(specialties)), buckets_raw=I(list(buckets)), Abstract=group$Abstract[1],stringsAsFactors = FALSE,check.names = FALSE)
   filtered.table <- rbind(filtered.table, temp)
 }
 
@@ -62,10 +68,11 @@ unique.authors <<- unique.authors[lapply(unique.authors, nchar) > 0]
 unique.journals <- sort(unique(filtered.table$Journal))
 unique.studytypes <<- sort(unique(filtered.table$'Type of Study'))
 unique.specialties <<- sort(c("Internal Medicine", "General", "Dermatology", "ICU", "Emergency Medicine", "Anesthesia", "Radiology", "OBGYN", "Public Health", "Cardiology", "Oncology", "Psych", "Family Medicine", "Gastroenterology", "Geriatrics", "Hematology", "Infectious Disease", "Immunology", "Medical Education", "Microbiology", "Nephrology", "Neurology", "Ophthalmology", "Palliative Care", "Pathology", "Pediatrics","Respirology", "Rheumatology", "Surgery", "Urology"))
+unique.buckets <<- sort(c("Evidence-based guidance documents and guidelines", "High quality systematic review/meta analysis", "High quality observational studies (cohort, case-control studies, etc.)", "High quality experimental studies (RCTs)","Natural history studies", "Case report","Lab studies","Reports of interventions/treatments","Imaging studies","Letter to the Editor/Opinion/Narrative Review","Statistical modelling/analytical studies"))
 
 # Aesthestics for Shiny
 filtered.table$Specialty <- lapply(filtered.table$specialty_raw, function(x) paste(x, collapse = ", "))
-filtered.table$Author <- lapply(filtered.table$AuthorList, function(x) paste(x, collapse = ", "))
+filtered.table$Author <- unlist(lapply(filtered.table$AuthorList, function(x) if (length(x) > 3) paste(paste(x[1:3], collapse = ", "), "et al") else paste(x, collapse = ", ")))
 
 #############################################
 
@@ -73,7 +80,8 @@ server <- function(input, output, session) { # Executes once per session (no nee
   #Populate the search filters
   updateSelectInput(session, "journal", choices = c("Select a journal" = "", unique.journals))
   updateSelectInput(session, "author", choices = c("Select authors" = "", unique.authors))
-  updateSelectInput(session, "study", choices = c("Select a publication type" = "", unique.studytypes))
+  updateSelectInput(session, "study", choices = c("Select a research type" = "", unique.studytypes))
+  updateSelectInput(session, "bucket", choices = c("Select a publication type" = "", unique.buckets))
   updateSelectInput(session, "specialty", choices = c("Select an area of interest" = "", unique.specialties))
   
   # Get a local copy of the dataset
@@ -108,8 +116,21 @@ server <- function(input, output, session) { # Executes once per session (no nee
       }
       display.table <- display.table[v,]
     }
+    
+    # Filter type Bucket
+    if (!is.null(input$bucket) & nrow(display.table)) {
+      #Initialize FALSE Vector
+      v <- vector("logical",nrow(display.table))
+      #iterate over author rows and flag as TRUE if ANY of the selected authors present
+      for (i in 1:nrow(display.table)) {
+        for (query in input$bucket) {
+          if (query %in% display.table$buckets_raw[[i]]) v[i] <- TRUE; break
+        }
+      }
+      display.table <- display.table[v,]
+    }
 
-    # Filter Specialty (any)
+    # Filter Specialty
     if (!is.null(input$specialty) & nrow(display.table)) {
       #Initialize FALSE Vector
       v <- vector("logical",nrow(display.table))
@@ -132,7 +153,7 @@ server <- function(input, output, session) { # Executes once per session (no nee
     output$ref_caption <- renderUI(
       if (!is.null(input$ex1_rows_selected)) {
         HTML(paste0(
-          paste(display.table$AuthorList[[input$ex1_rows_selected]],collapse=", "), ". ",
+          display.table$Author[input$ex1_rows_selected], ". ",
           "<b>",display.table[input$ex1_rows_selected,"Title - Linked"], "</b> ",
           "<i>", trimws(display.table[input$ex1_rows_selected,"Journal"]), "</i>. <br><br>", if (is.na(display.table[input$ex1_rows_selected, "Abstract"])) "No abstract." else display.table[input$ex1_rows_selected, "Abstract"]
         ))} else HTML("<i>Select a reference...</i>")
@@ -149,15 +170,16 @@ server <- function(input, output, session) { # Executes once per session (no nee
         paste("references",Sys.Date(),".csv", sep = "")
       },
       content = function(file) {
-        write.csv(display.table[,gsub("Title - Linked", "Title", included.headers)], file, row.names = FALSE)
+        write.csv(display.table[,c("Title", "Author", "Journal", "Date", "PMID")], file, row.names = FALSE)
       }
     )
     
     #Output
     DT::datatable(
       display.table[,included.headers],
+      colnames = c("Type of Publication"="buckets_raw", "Title" = "Title - Linked", "Type of Research"="Type of Study"),
       extensions = "Responsive",
       options = list(pageLength = 10, order = list(list(4, "desc"))),
-      rownames= FALSE, escape=FALSE, selection = 'single')
+      rownames= FALSE, escape=-1, selection = 'single')
   })
 }
