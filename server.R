@@ -84,6 +84,16 @@ server <- function(input, output, session) { # Executes once per session (no nee
   updateSelectInput(session, "bucket", choices = c("Select a publication type" = "", unique.buckets))
   updateSelectInput(session, "specialty", choices = c("Select an area of interest" = "", unique.specialties))
   
+  
+  # Parse URI
+  observe({
+    query <- parseQueryString(session$clientData$url_search)
+    if (!is.null(query[['specialty']])) {
+      if (query[['specialty']] %in% unique.specialties) updateTextInput(session, "specialty", value = query[['specialty']])
+    }
+  })
+  
+  
   # Get a local copy of the dataset
   display.table <- filtered.table
   
