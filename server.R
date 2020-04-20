@@ -33,7 +33,7 @@ for (i in 1:length(unique_refs)) {
   group <- (rawtable %>% filter(Refid == unique_refs[i])) # separate out the reviews of the same reference
   group_spec <- group %>% select(starts_with("Spec"))
   vec_spec <- c()
-  group_buck <- group %>% select(starts_with("Type Bucket"))
+  group_buck <- group %>% select(starts_with("Type of Publication"))
   vec_buck <- c()
   
   
