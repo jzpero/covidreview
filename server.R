@@ -68,7 +68,7 @@ unique.authors <<- unique.authors[lapply(unique.authors, nchar) > 0]
 unique.journals <- sort(unique(filtered.table$Journal))
 unique.studytypes <<- sort(unique(filtered.table$'Type of Study'))
 unique.specialties <<- sort(c("Internal Medicine", "General", "Dermatology", "ICU", "Emergency Medicine", "Anesthesia", "Radiology", "OBGYN", "Public Health", "Cardiology", "Oncology", "Psych", "Family Medicine", "Gastroenterology", "Geriatrics", "Hematology", "Infectious Disease", "Immunology", "Medical Education", "Microbiology", "Nephrology", "Neurology", "Ophthalmology", "Palliative Care", "Pathology", "Pediatrics","Respirology", "Rheumatology", "Surgery", "Urology"))
-unique.buckets <<- sort(c("Evidence-based guidance documents and guidelines", "High quality systematic review/meta analysis", "High quality observational studies (cohort, case-control studies, etc.)", "High quality experimental studies (RCTs)","Natural history studies", "Case report","Lab studies","Reports of interventions/treatments","Imaging studies","Letter to the Editor/Opinion/Narrative Review","Statistical modelling/analytical studies"))
+unique.buckets <<- sort(c("Evidence-based guidance documents and guidelines", "Systematic review/meta analysis", "Observational studies", "Experimental studies","Natural history studies", "Case report","Lab studies","Reports of interventions/treatments","Imaging studies","Letter to the Editor/Opinion/Narrative Review","Statistical modelling/analytical studies"))
 
 # Aesthestics for Shiny
 filtered.table$Specialty <- lapply(filtered.table$specialty_raw, function(x) paste(x, collapse = ", "))
