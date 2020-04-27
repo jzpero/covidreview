@@ -67,7 +67,7 @@ unique.authors <- sort(unique(unlist(filtered.table$AuthorList)))
 unique.authors <<- unique.authors[lapply(unique.authors, nchar) > 0]
 unique.journals <- sort(unique(filtered.table$Journal))
 unique.studytypes <<- sort(unique(filtered.table$'Type of Study'))
-unique.specialties <<- sort(c("Internal Medicine", "General", "Dermatology", "ICU", "Emergency Medicine", "Anesthesia", "Radiology", "OBGYN", "Public Health", "Cardiology", "Oncology", "Psych", "Family Medicine", "Gastroenterology", "Geriatrics", "Hematology", "Infectious Disease", "Immunology", "Medical Education", "Microbiology", "Nephrology", "Neurology", "Ophthalmology", "Palliative Care", "Pathology", "Pediatrics","Respirology", "Rheumatology", "Surgery", "Urology"))
+unique.specialties <<- sort(c("Internal Medicine", "General", "Dermatology", "ICU", "Emergency Medicine", "Anesthesia", "Radiology", "OBGYN", "Public Health", "Cardiology", "Oncology", "Psychiatry", "Family Medicine", "Gastroenterology", "Geriatrics", "Hematology", "Infectious Disease", "Immunology", "Medical Education", "Microbiology", "Nephrology", "Neurology", "Ophthalmology", "Palliative Care", "Pathology", "Pediatrics","Respirology", "Rheumatology", "Surgery", "Urology"))
 unique.buckets <<- sort(c("Evidence-based guidance documents and guidelines", "Systematic review/meta analysis", "Observational studies", "Experimental studies","Natural history studies", "Case report","Lab studies","Reports of interventions/treatments","Imaging studies","Letter to the Editor/Narrative Review","Statistical modelling/analytical studies"))
 
 # Aesthestics for Shiny
