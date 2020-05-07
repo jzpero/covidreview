@@ -13,6 +13,7 @@ Our search is ongoing as new literature emerges. Our internal repository of unfi
 - April 8, 2020 (N=3288)
 - April 15, 2020 (N=4298)
 - April 29, 2020 (N=7649)
+- May 6, 2020 (N=9163)
 
 As we continually review and process the literature in sequential order, oldest to newest, we will continue to add included publications. Past updates are:
 
@@ -30,6 +31,7 @@ As we continually review and process the literature in sequential order, oldest 
 - April 29, 2020 (N=1534, 26.25% included)
 - May 1, 2020 (N=1586, 26.18% included)
 - May 4, 2020 (N=1665, 25.76% included)
+- May 6, 2020 (N=1783, 25.15% included)
 
 ## Inclusion Criteria
 No strict inclusion criteria were established; the purpose of this literature review is to provide high-yield pertinent research to the front-line clinician across a breadth of areas, specifically oriented towards the Ontario/Canada/North American context of COVID-19.
