@@ -57,6 +57,11 @@ ui <- navbarPage(
            fluidRow(column(3),
                     column(6,wellPanel(HTML(includeMarkdown("markdown/Methods.md")))),
                     column(3))
+    ),
+    tabPanel('Collaborations',
+           fluidRow(column(3),
+                    column(6,wellPanel(HTML(includeMarkdown("markdown/Media.md")))),
+                    column(3))
     )
   ),
   collapsible = TRUE,
