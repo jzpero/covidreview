@@ -16,6 +16,8 @@ This is a working document describing the process of updating the website. It is
    * Writes these data to `data/metadata.csv`
 
 ## (3) Test locally
+`shiny::runApp()`
+
 ## (4) Deployment
 1. Transfer changes to your live environment however you want. I push to a remote dev branch of the repo, merge the changes to the master branch, and then pull these changes into the server.
 2. Restart shinyserver: `sudo systemctl restart shiny-server`
