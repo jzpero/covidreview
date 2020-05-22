@@ -16,48 +16,65 @@ createLink <- function(PMID, text) {
 
 included.headers <- c("Title - Linked", "Author", "Journal","Date",  "PMID", "Type of Study", "buckets_raw", "Specialty")
 
-# Update the data once
+# Load the most recent data
 link <- list.files("data/", pattern="(current)", full.names=TRUE)[1]
 
-# Data Processing (done once)
+# Load the cached data OR create an empty DF
+if (file.exists("data/cache.RDS")) {
+  filtered.table <- readRDS("data/cache.RDS")
+} else {
+  filtered.table <- data.frame(AuthorList=c(), Author=c(), Journal=c(), 'Type of Study'=c(),  Title=c(), Date=c(), PMID=c(), specialty_raw=c(), buckets_raw=c(), Abstract=c(),stringsAsFactors = FALSE, check.names = FALSE)
+}
+
+# Load the current data
 rawtable <- read.csv(link, sep = ",", na.strings="", encoding = "UTF-8", check.names=FALSE, stringsAsFactors=FALSE, colClasses = "character")
 rawtable <- rawtable %>% select(-"")
-date_data <- read.csv("data/date_output.csv", header=T, colClasses = c("character", "character"))
+metadata <- read.csv("data/metadata.csv", header=T, colClasses = c("character", "character", "character"))
 headers <- colnames(rawtable)
 
-# Deduplicate entries, merging the specialties and type bucket
-filtered.table <- data.frame(AuthorList=c(), Author=c(), Journal=c(), 'Type of Study'=c(),  Title=c(), Date=c(), PMID=c(), specialty_raw=c(), buckets_raw=c(), Abstract=c(),stringsAsFactors = FALSE, check.names = FALSE)
+# For current data NOT in cache, deduplicate entries, merging the specialties and type bucket
+unique_refs <- unique(rawtable$PMID)
+new_data <- rawtable[!rawtable$PMID %in% filtered.table$PMID,]
+new_unique_pmid <- unique(new_data$PMID)
 
-unique_refs <- unique(rawtable$Refid)
-for (i in 1:length(unique_refs)) {
-  group <- (rawtable %>% filter(Refid == unique_refs[i])) # separate out the reviews of the same reference
-  group_spec <- group %>% select(starts_with("Spec"))
-  vec_spec <- c()
-  group_buck <- group %>% select(starts_with("Type of Publication"))
-  vec_buck <- c()
+if (length(new_unique_pmid) > 0) {
+  for (i in 1:length(new_unique_pmid)) {
+    group <- (new_data %>% filter(PMID == new_unique_pmid[i])) # separate out the reviews of the same reference
+    group_spec <- group %>% select(starts_with("Spec"))
+    vec_spec <- c()
+    group_buck <- group %>% select(starts_with("Type of Publication"))
+    vec_buck <- c()
+    
+    
+    for (j in 1:nrow(group)) { #iterate through the reviews of the reference and create a list of (specialty) values and (type bucket) values
+      vec_spec <- c(vec_spec, group_spec[j,])
+      vec_buck <- c(vec_buck, group_buck[j,])
+    }
+    
+    specialties <- unique(as.vector(unlist(vec_spec))) # get unique entries as vector
+    specialties <- specialties[!is.na(specialties)]
+    buckets <- unique(as.vector(unlist(vec_buck))) # get unique entries as vector
+    buckets <- buckets[!is.na(buckets)]
+    
+    authors <- lapply(strsplit(as.character(group$Author[1]), ","),trimws)
+    
+    d <- group$Date[1]
+    if (group$PMID[1] %in% metadata$pmid) {
+      replacement <- (metadata %>% filter(pmid == group$PMID[1]))$date
+      if (!is.na(replacement)) d <- replacement
+    }
+    
+    j_temp <- (metadata %>% filter(pmid == group$PMID[1]))$jabbrv
+    if (length(j_temp) > 0) journal <- j_temp
+    else journal <- capwords(group$Journal[1])
   
-  
-  for (j in 1:nrow(group)) { #iterate through the reviews of the reference and create a list of (specialty) values and (type bucket) values
-    vec_spec <- c(vec_spec, group_spec[j,])
-    vec_buck <- c(vec_buck, group_buck[j,])
+    # Fill filtered.table with useful data
+    temp <- data.frame(AuthorList=I(authors), Author=group$Author[1], Journal=journal, 'Type of Study'=group$`Type of Study`[1], Title=group$Title[1], Date=d, PMID=group$PMID[1], specialty_raw=I(list(specialties)), buckets_raw=I(list(buckets)), Abstract=group$Abstract[1],stringsAsFactors = FALSE,check.names = FALSE)
+    filtered.table <- rbind(filtered.table, temp)
   }
   
-  specialties <- unique(as.vector(unlist(vec_spec))) # get unique entries as vector
-  specialties <- specialties[!is.na(specialties)]
-  buckets <- unique(as.vector(unlist(vec_buck))) # get unique entries as vector
-  buckets <- buckets[!is.na(buckets)]
-  
-  authors <- lapply(strsplit(as.character(group$Author[1]), ","),trimws)
-  
-  d <- group$Date[1]
-  if (group$PMID[1] %in% date_data$pmid) {
-    replacement <- (date_data %>% filter(pmid == group$PMID[1]))$date
-    if (!is.na(replacement)) d <- replacement
-  }
-  
-  # Fill filtered.table with useful data
-  temp <- data.frame(AuthorList=I(authors), Author=group$Author[1], Journal=capwords(group$Journal[1]), 'Type of Study'=group$`Type of Study`[1], Title=group$Title[1], Date=d, PMID=group$PMID[1], specialty_raw=I(list(specialties)), buckets_raw=I(list(buckets)), Abstract=group$Abstract[1],stringsAsFactors = FALSE,check.names = FALSE)
-  filtered.table <- rbind(filtered.table, temp)
+  # Write filtered.table to directory
+  saveRDS(filtered.table,file="data/cache.RDS")
 }
 
 N <<- nrow(filtered.table)
