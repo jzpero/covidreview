@@ -5,6 +5,9 @@ This tool is geared towards front-line practising physicians.
 
 This database is being constantly updated with references that have been screened from the vast amounts of research emerging on COVID-19 and SARS-CoV-2. We aim for our database to be as updated and as concise as possible.
 
+## Workflow
+Since I have gotten several requests for assistance on deployment and applications to other settings, please see [Markdown.md](/markdown/Workflow.md) for an informal description of how to update the software once it is deployed.
+
 ## Current Features:
 - filterable by title, author, journal, specialty, type of study
 - summary of reference is populated with abstract etc
