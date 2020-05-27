@@ -42,6 +42,7 @@ As we continually review and process the literature in sequential order, oldest 
 - May 20, 2020 (N=2386, 24.76% included)
 - May 22, 2020 (N=2429, 24.71% included)
 - May 23, 2020 (N=2530, 24.69% included)
+- May 26, 2020 (N=2619, 24.75% included)
 
 ## Inclusion Criteria
 No strict inclusion criteria were established; the purpose of this literature review is to provide high-yield pertinent research to the front-line clinician across a breadth of areas, specifically oriented towards the Ontario/Canada/North American context of COVID-19.
