@@ -1,3 +1,5 @@
+library(shinycssloaders)
+
 filterPanel <- wellPanel(
   id = "searchpanel",
   p(strong("Filter Options"), br(), "Any combination of filters accepted."),
@@ -27,6 +29,9 @@ filterPanel <- wellPanel(
   )
 )
 
+options(spinner.color="#0275D8", spinner.color.background="#ffffff", spinner.size=2)
+
+
 ui <- navbarPage(
   title = 'COVID-19 Literature Review',
   position = c("fixed-top"),
@@ -39,7 +44,7 @@ ui <- navbarPage(
                filterPanel,
                wellPanel(style = "overflow-y:auto; max-height:350px", htmlOutput("ref_caption"))
         ),
-        column(9, DT::dataTableOutput('ex1'))
+        column(9, withSpinner(DT::dataTableOutput('ex1')),type=8)
       )
   ),
   navbarMenu("About",
