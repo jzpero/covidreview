@@ -95,11 +95,11 @@ filtered.table$Author <- unlist(lapply(filtered.table$AuthorList, function(x) if
 
 server <- function(input, output, session) { # Executes once per session (no need to restart service)
   #Populate the search filters
-  updateSelectizeInput(session, "journal", choices = c("Select a journal" = "", unique.journals), server = T)
-  updateSelectizeInput(session, "author", choices = c("Select authors" = "", unique.authors), server = T)
-  updateSelectizeInput(session, "study", choices = c("Select a research type" = "", unique.studytypes), server = T)
-  updateSelectizeInput(session, "bucket", choices = c("Select a publication type" = "", unique.buckets), server = T)
-  updateSelectizeInput(session, "specialty", choices = c("Select an area of interest" = "", unique.specialties), server = T)
+  updateSelectizeInput(session, "journal", choices = unique.journals, server = T)
+  updateSelectizeInput(session, "author", choices = unique.authors, server = T)
+  updateSelectizeInput(session, "study", choices = unique.studytypes, server = T)
+  updateSelectizeInput(session, "bucket", choices = unique.buckets, server = T)
+  updateSelectizeInput(session, "specialty", choices = unique.specialties, server = T)
   
   # Parse URI
   observe({
