@@ -45,6 +45,7 @@ As we continually review and process the literature in sequential order, oldest 
 - May 23, 2020 (N=2530, 24.69% included)
 - May 26, 2020 (N=2619, 24.75% included)
 - May 28, 2020 (N=2686, 24.69% included)
+- May 30, 2020 (N=2797, 24.96% included)
 
 ## Inclusion Criteria
 No strict inclusion criteria were established; the purpose of this literature review is to provide high-yield pertinent research to the front-line clinician across a breadth of areas, specifically oriented towards the Ontario/Canada/North American context of COVID-19.
@@ -86,7 +87,7 @@ Dates are not necessarily date of publication; they are obtained with a separate
 We update this website with newly included references on a regular basis.
 
 ## Webtool Implementation
-This fully open-source tool has been written in Shiny in R. Source code, data, and acknowledgements are available at https://github.com/jzpero/covid19lit. Interested in contributing? Contact: jasper.ho (at) medportal.ca.
+This fully open-source tool has been written in Shiny in R. Source code, data, and acknowledgements are available at https://github.com/jzpero/covidreview. Interested in contributing? Contact: jasper.ho (at) medportal.ca.
 
 ## Notes
 This tool is a work in progress. It was also developed by a non-professional. It relies on online data from PubMed parsed from official tools, with custom code or public libraries. As such, there may be occasional errors. Please do not rely on any specific data found on this online tool without appropriate confirmation from the source. Errors may include:

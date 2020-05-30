@@ -44,12 +44,12 @@ ui <- navbarPage(
                filterPanel,
                wellPanel(style = "overflow-y:auto; max-height:350px", htmlOutput("ref_caption"))
         ),
-        column(9, withSpinner(DT::dataTableOutput('ex1')),type=8)
+        column(9, withSpinner(DT::dataTableOutput("ex1")))
       )
   ),
   navbarMenu("About",
     tabPanel("The Project",
-           tags$style(type="text/css","body {padding-top:60px;}"),
+           tags$style(type="text/css","body {padding-top:60px;padding-bottom:15px;}"),
            fluidRow(column(3),
               column(6,wellPanel(
                 HTML(includeMarkdown("markdown/About-Proj.md")),
@@ -71,5 +71,6 @@ ui <- navbarPage(
   ),
   collapsible = TRUE,
   theme = "yeti.css",
-  header = tags$head(includeHTML(("google-analytics.html")), tags$link(rel="shortcut icon", href="favicon.ico"))
+  header = tags$head(includeHTML(("google-analytics.html")), tags$link(rel="shortcut icon", href="favicon.ico")),
+  footer = tags$footer(tags$style(".fa-twitter-square {color:#1DA1F2} #twit {background-color:WhiteSmoke}"), fixedPanel(id="twit", tags$a(href="https://www.twitter.com/covidreview", target="_blank", tagList(icon("twitter-square"), "@covidreview"), align = "center"), bottom=0, right=5))
 )
