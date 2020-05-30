@@ -116,6 +116,11 @@ server <- function(input, output, session) { # Executes once per session (no nee
   #clear all button actions
   observeEvent(input$clearAll, {
     shinyjs::reset("searchpanel")
+    updateSelectizeInput(session, "journal", choices = unique.journals, server = T)
+    updateSelectizeInput(session, "author", choices = unique.authors, server = T)
+    updateSelectizeInput(session, "study", choices = unique.studytypes, server = T)
+    updateSelectizeInput(session, "bucket", choices = unique.buckets, server = T)
+    updateSelectizeInput(session, "specialty", choices = unique.specialties, server = T)
   })
 
   #Main Data Output
