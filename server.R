@@ -201,12 +201,6 @@ server <- function(input, output, session) { # Executes once per session (no nee
     )
     
     #Output
-    # DT::datatable(
-    #   display.table[,included.headers],
-    #   colnames = c("Type of Publication"="buckets_raw", "Title" = "Title - Linked", "Type of Research"="Type of Study"),
-    #   extensions = "Responsive",
-    #   options = list(pageLength = 10, order = list(list(4, "desc"))),
-    #   rownames= FALSE, escape=-1, selection = 'single')
     display.table[,included.headers]
   },
   options = list(pageLength = 10, order = list(list(4, "desc"))),
