@@ -5,50 +5,6 @@ Our current PubMed search strategy is:
 ((((("COVID-19" [Supplementary Concept]) OR "severe acute respiratory syndrome coronavirus 2" [Supplementary Concept]) OR COVID-19[Title/Abstract]) OR coronavirus 19[Title/Abstract]) OR SARS-COV-2[Title/Abstract] OR wuhan coronavirus AND 2019/12:2030[pdat]) OR 2019-nCoV OR 2019nCoV OR COVID-19 OR SARS-CoV-2)
 ```
 
-## Updating
-
-Our search is ongoing as new literature emerges. Our internal repository of unfiltered articles has been updated on the following dates:
-
-- March 28, 2020 (N=1890)
-- April 8, 2020 (N=3288)
-- April 15, 2020 (N=4298)
-- April 29, 2020 (N=7649)
-- May 6, 2020 (N=9163)
-- May 13, 2020 (N=11464)
-- May 20, 2020 (N=14360)
-- May 27, 2020 (N=16128)
-
-As we continually review and process the literature in sequential order, oldest to newest, we will continue to add included publications. Past updates are:
-
-- April 12, 2020 (N=537)
-- April 13, 2020 (N=659)
-- April 14, 2020 (N=827)
-- April 15, 2020 (N=966, 32.58% included)
-- April 18, 2020 (N=1066, 31.75% included)
-- April 19, 2020 (N=1091, 31.48% included)
-- April 20, 2020 (N=1154, 30.90% included)
-- April 21, 2020 (N=1186, 30.46% included)
-- April 23, 2020 (N=1281, 28.72% included)
-- April 25, 2020 (N=1318, 26.99% included)
-- April 27, 2020 (N=1432, 26.77% included)
-- April 29, 2020 (N=1534, 26.25% included)
-- May 1, 2020 (N=1586, 26.18% included)
-- May 4, 2020 (N=1665, 25.76% included)
-- May 6, 2020 (N=1783, 25.15% included)
-- May 10, 2020 (N=1910, 25.39% included)
-- May 13, 2020 (N=2116, 25.46% included)
-- May 15, 2020 (N=2216, 25.60% included)
-- May 17, 2020 (N=2293, 25.16% included)
-- May 18, 2020 (N=2333, 25.02% included)
-- May 20, 2020 (N=2386, 24.76% included)
-- May 22, 2020 (N=2429, 24.71% included)
-- May 23, 2020 (N=2530, 24.69% included)
-- May 26, 2020 (N=2619, 24.75% included)
-- May 28, 2020 (N=2686, 24.69% included)
-- May 30, 2020 (N=2797, 24.96% included)
-- June 1, 2020 (N=2840, 24.93% included)
-- June 3, 2020 (N=2905, 24.74% included)
-
 ## Inclusion Criteria
 No strict inclusion criteria were established; the purpose of this literature review is to provide high-yield pertinent research to the front-line clinician across a breadth of areas, specifically oriented towards the Ontario/Canada/North American context of COVID-19.
 

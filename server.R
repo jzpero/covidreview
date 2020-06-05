@@ -122,6 +122,8 @@ server <- function(input, output, session) { # Executes once per session (no nee
     updateSelectizeInput(session, "bucket", choices = unique.buckets, server = T)
     updateSelectizeInput(session, "specialty", choices = unique.specialties, server = T)
   })
+  
+  showNotification("Last updated June 5 2020.", type="message")
 
   #Main Data Output
   output$ex1 <- DT::renderDataTable(server=TRUE, {

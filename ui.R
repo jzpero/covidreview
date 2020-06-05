@@ -1,4 +1,5 @@
 library(shinycssloaders)
+library(shinyBS)
 
 filterPanel <- wellPanel(
   id = "searchpanel",
@@ -49,11 +50,11 @@ ui <- navbarPage(
   ),
   navbarMenu("About",
     tabPanel("The Project",
-           tags$style(type="text/css","body {padding-top:60px;padding-bottom:15px;}"),
+           tags$style(type="text/css","body {padding-top:60px;padding-bottom:15px;} #smallImage {max-width: 1200px; width: 100%; height: auto; display: block;margin-left: auto;margin-right: auto} #collapseGroup {max-width:1000px;maxheight:200px;width: 100%;margin-left: auto;margin-right: auto} .shiny-notification {position: fixed;left:5px;bottom:5px}"),
            fluidRow(column(3),
               column(6,wellPanel(
                 HTML(includeMarkdown("markdown/About-Proj.md")),
-                img(src="team.png",width="100%"),
+                img(src="team.png"),
                 HTML(includeMarkdown("markdown/About-Proj2.md"))
               )),
              column(3))
@@ -62,6 +63,14 @@ ui <- navbarPage(
            fluidRow(column(3),
                     column(6,wellPanel(HTML(includeMarkdown("markdown/Methods.md")))),
                     column(3))
+    ),
+    tabPanel('Updates',
+             bsCollapse(id = "collapseGroup", 
+                        bsCollapsePanel("Website Updates", includeMarkdown("markdown/update_list.md"), style = "primary"),
+                        bsCollapsePanel("Search Updates", includeMarkdown("markdown/search_list.md"), style = "primary")
+             ),
+             img(src="pending.png" , id="smallImage"),
+             img(src="facet.png" , id="smallImage")
     ),
     tabPanel('Collaborations',
            fluidRow(column(3),
