@@ -81,5 +81,5 @@ ui <- navbarPage(
   collapsible = TRUE,
   theme = "yeti.css",
   header = tags$head(includeHTML(("google-analytics.html")), tags$link(rel="shortcut icon", href="favicon.ico")),
-  footer = tags$footer(tags$style(".fa-twitter-square {color:#1DA1F2} #twit {background-color:WhiteSmoke}"), fixedPanel(id="twit", tags$a(href="https://www.twitter.com/covidreview", target="_blank", tagList(icon("twitter-square"), "@covidreview"), align = "center"), bottom=0, right=5))
+  footer = tags$footer(tags$style(".fab-twitter-square {color:#1DA1F2} #gitlink * {color:#808080} #twit {background-color:WhiteSmoke}"), fixedPanel(id="twit", tags$a(href="https://www.twitter.com/covidreview", target="_blank", tagList(icon("twitter-square"), "@covidreview"), align = "center"), tags$a(href="https://www.github.com/jzpero/covidreview", target="_blank", tagList(icon("github"), "Github"), align = "center", id="gitlink"), bottom=0, right=5))
 )
