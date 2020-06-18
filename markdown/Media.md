@@ -6,6 +6,10 @@ We are proud to collaborate with and contribute to various COVID-19-related reso
 [**COVID Critical Care**](https://covidcriticalcare.ca/helpful-links/), *William Osler Health System*
 
 ## Media
+[**Behind CovidReview.ca – How McMaster Medical Students Created an Evidence-Based Medicine Database to Aid in the Fight against COVID-19**](https://canadiem.org/behind-covidreview-ca/), *CanadiEM, June 4 2020*
+
+> The COVID-19 pandemic has drastically changed how physicians practice medicine worldwide and has created a wide information gap as clinicians struggle to integrate the immense volume of new research into their practice.
+
 [**Separating fact from fiction: McMaster students, Toronto physician earn international praise for online tools**](https://healthydebate.ca/2020/05/topic/online-tools-covid19), *HealthyDebate, May 5 2020*
 
 >Separating facts and sound advice from lies and conspiracy theories has become a non-stop challenge for health care workers on the COVID-19 frontline.
