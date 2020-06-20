@@ -123,7 +123,7 @@ server <- function(input, output, session) { # Executes once per session (no nee
     updateSelectizeInput(session, "specialty", choices = unique.specialties, server = T)
   })
   
-  showNotification("Updated June 17 2020.", type="message")
+  showNotification(paste0("Updated ", as.Date(file.info("data/cache.RDS")$mtime),"."), type="message")
 
   #Main Data Output
   output$ex1 <- DT::renderDataTable(server=TRUE, {
