@@ -3,19 +3,16 @@ library(anytime)
 library(stringr)
 
 files <- list.files("data/pubmed/", full.names=TRUE)
+start_index <- 48
 
 writeToDisk <- function(count) {
    updates <- data.frame(pmid = PMIDS[1:count], date=DATES[1:count], jabbrv=JABBRVS[1:count], stringsAsFactors=F)
    data <- rbind(data, updates, stringsAsFactors=F, make.row.names=F)
    write.table(data, "data/metadata.csv", row.names = FALSE, sep=",")
-   # cat("Writing...\n")
 }
 
-# c_ref <- read.csv("data/countrylist.csv", stringsAsFactors = F)
-# c_ref <- c_ref$ï..Country
-
-for (file in files) {
-   c <- read_xml(file)
+for (file in files[start_index:length(files)]) {
+   c <- read_xml(file, options = c("RECOVER", "NOERROR", "NOBLANKS"))
    cat(file,"\n")
    
    articles <- xml_find_all(c,"./PubmedArticle")
@@ -47,28 +44,8 @@ for (file in files) {
          PMIDS[count] <- refid
          DATES[count] <- paste(year, month, day, sep="-")
          JABBRVS[count] <- xml_text(xml_find_first(articles[i], "./MedlineCitation/MedlineJournalInfo/MedlineTA"))
-         
-         # t <- str_detect(tail(strsplit(
-         #    xml_text(xml_find_first(articles[i], "./MedlineCitation/Article/AuthorList/Author/AffiliationInfo/Affiliation"))
-         #    , split=',')[[1]], 1), c_ref)
-         # 
-         # if (!is.na(any(t)) & any(t)) {
-         #    COUNTRIES[count] <- c_ref[t]
-         # }
-         # FULLJOURN[count] <- xml_text(xml_find_first(articles[i], "./MedlineCitation/Article/Journal/Title"))
       }
-      # cat(i*100/length(articles),"%","(",i,")","\n")
-      
-      # every 100, write to disk and clear buffer
-      # if (count == 100) {
-      #    writeToDisk()
-      #    PMIDS <- vector("character", 100)
-      #    DATES <- vector("character", 100)
-      #    JABBRVS <- vector("character", 100)
-      #    count <- 0
-      # }
    }
-
    #write the remainder
    writeToDisk(count)
 }
