@@ -3,7 +3,7 @@ library(anytime)
 library(stringr)
 
 files <- list.files("data/pubmed/", full.names=TRUE)
-start_index <- 48
+start_index <- 1
 
 writeToDisk <- function(count) {
    updates <- data.frame(pmid = PMIDS[1:count], date=DATES[1:count], jabbrv=JABBRVS[1:count], stringsAsFactors=F)
