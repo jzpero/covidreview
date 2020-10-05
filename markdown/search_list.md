@@ -1,6 +1,7 @@
 Our search is ongoing as new literature emerges. Our internal repository of unfiltered articles has been updated on the following dates:
 
-- Sept 17, 2020 (N=53534)
+- October 4, 2020 (N=59091)
+- September 17, 2020 (N=53534)
 - August 17, 2020 (N=40102)
 - August 4, 2020 (N=36880)
 - July 22, 2020 (N=33508)

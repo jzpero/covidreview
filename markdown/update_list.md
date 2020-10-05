@@ -1,5 +1,6 @@
 29 we continually review and process the literature in sequential order, oldest to newest, we will continue to add included publications. Past updates are:
 
+- October 4, 2020 (N=6174, 17.19% included)
 - September 24, 2020 (N=6135, 17.42% included)
 - September 17, 2020 (N=6135, 17.70% included)
 - August 30, 2020 (N=6060, 18.18% included)
